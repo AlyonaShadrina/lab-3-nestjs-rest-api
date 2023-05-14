@@ -1,7 +1,15 @@
 #!/usr/bin/env sh
+
+set -a # automatically export all variables
+source "./.env"
+set +a
+
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run test
+npm run test:cov
+
+codecov --token=$CODECOV_TOKEN
+
 if npm audit; then
     echo "Audit: success!"
 else
